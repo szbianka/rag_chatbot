@@ -24,7 +24,7 @@ Follow the steps below to set up and run the project.
 #### 4. Run the Application
   - activate in the virtual environment
     - by ``` source chatbot_venv/bin/activate ``` on Mac or in a bash terminal
-    - or ``` chatbot_venv\Scripts\Activate.ps1```
+    - or ``` chatbot_venv\Scripts\Activate.ps1``` on Windows
   - Launch the chatbot using Streamlit, which will start a local server where you can interact with the chatbot by running ```streamlit run app.py```
 
 ### How to Use
