@@ -12,6 +12,8 @@ if 'chat_history' not in st.session_state:
     st.session_state.chat_history = []
 if 'user_input' not in st.session_state:
     st.session_state.user_input = ""  # For clearing the input box later
+if 'pdf_paths' not in st.session_state:
+    st.session_state.pdf_paths = []  # Store paths of uploaded PDFs
 
 # Placeholder for dropping multiple PDF files
 uploaded_files = st.file_uploader("Upload up to 5 PDFs", type="pdf", accept_multiple_files=True)
@@ -29,6 +31,7 @@ if uploaded_files is not None and len(uploaded_files) > 0:
                     f.write(uploaded_file.getbuffer())
                 pdf_paths.append(pdf_path)
 
+            st.session_state.pdf_paths = pdf_paths  # Store PDF paths in session state
             st.success("PDFs processed. You can now ask questions.")
 
 # Define function to display chat history
@@ -46,12 +49,13 @@ def display_chat_history():
         """, unsafe_allow_html=True)
         st.markdown("----")  # Divider between conversations
 
-# Display chat history ( above the input box)
+# Display chat history (above the input box)
 display_chat_history()
 
-# Setting up chat input box ans send buttons
+# Setting up chat input box and send buttons
 st.markdown("### :left_speech_bubble: Chat")
 st.text("Ask a question about the document:")
+
 # Create a form to group the input box and the button together
 with st.form(key="input_form", clear_on_submit=True):
     # Place the input and the button next to each other
@@ -65,13 +69,16 @@ with st.form(key="input_form", clear_on_submit=True):
     
     # Process the form submission (when either the button is clicked or 'Enter' is pressed)
     if submit_button and query:
-        if len(uploaded_files) > 0:
+        if len(st.session_state.pdf_paths) > 0:
             with st.spinner('Processing your query...'):
-                response = rag_pipeline(pdf_paths, query)
-                st.session_state.chat_history.append((query, response))
+                response = rag_pipeline(st.session_state.pdf_paths, query)
+                st.session_state.chat_history.append((query, response))  # Add to chat history
                 
+                # Immediately display the new response
+                st.markdown(f"<strong>👩‍💻 Human:</strong> {query}", unsafe_allow_html=True)
+                st.markdown(f"<strong>🤖 Bot:</strong> {response}", unsafe_allow_html=True)
+
                 # Clear the input field by resetting the session state
                 st.session_state.user_input = ""  # Reset session state user_input
         else:
             st.warning("Please upload and process PDFs before asking questions.")
-
