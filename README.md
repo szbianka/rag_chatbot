@@ -31,3 +31,5 @@ Follow the steps below to set up and run the project.
 Upload up to 5 PDF files using the file uploader.
 Ask questions related to the uploaded PDFs in the chat box.
 The chatbot will retrieve relevant information from the PDFs and respond accordingly.
+
+NB: Make sure you have included a .env file with your HuggingFace API token.
