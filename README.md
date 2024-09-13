@@ -1,6 +1,7 @@
 # RAG chatbot
 
 This project implements a Retrieval-Augmented Generation (RAG) chatbot that can process up to 5 PDF files and generate answers based on their content.
+The model used in the project is Microsoft's Phi-1.5 (see: https://huggingface.co/microsoft/phi-1_5), however, it can be flexibly changed when using the ```rag_pipeline``` function in the ```rag_chatbot.py``` script.
 
 ### Features
 - Accepts up to 5 PDF files as input.
@@ -21,8 +22,10 @@ Follow the steps below to set up and run the project.
     - Installs the required dependencies from requirements.txt
   - ```bash setup.sh```
 #### 4. Run the Application
-  - Launch the chatbot using Streamlit, which will start a local server where you can interact with the chatbot
-  - ```streamlit run app.py```
+  - activate in the virtual environment
+                        - by ``` source chatbot_venv/bin/activate ``` on Mac or in a bash terminal
+                        - or ``` chatbot_venv\Scripts\Activate.ps1```
+  - Launch the chatbot using Streamlit, which will start a local server where you can interact with the chatbot by running ```streamlit run app.py```
 
 ### How to Use
 Upload up to 5 PDF files using the file uploader.
